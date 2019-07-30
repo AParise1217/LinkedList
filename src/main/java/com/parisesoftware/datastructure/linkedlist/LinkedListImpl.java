@@ -57,22 +57,21 @@ import com.parisesoftware.model.Node;
  * 			
  * 		
  */
-public class LinkedListImpl implements ILinkedList {
 
-	private Node head;
-	private int numElements;
+public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
 
-    /**
-     * Default Constructor
-     */
+	private Node<T> head;
+	private static int numElements;
+	
 	public LinkedListImpl(){
+		//constructor
 		head = null;
 		numElements = 0;
 	}
 	
-	public void insertHead(String info){
+	public void insertHead(Comparable info){
 		//creates a new node, then adds it to the front of the linked list
-		Node newNode = new Node(null, info);
+		Node newNode = new Node<>(null, info);
 		incNumElements();
 		if(head == null){
 			//if the linked list is currently empty
@@ -85,16 +84,16 @@ public class LinkedListImpl implements ILinkedList {
 		
 	}
 
-	public void insertEnd(String info){
+	public void insertEnd(Comparable info){
 		//creates a new node, then adds it at the end of the linked list
-		Node newNode = new Node(null, info);
+		Node newNode = new Node<>(null, info);
 		incNumElements();
 		if(head == null){
 			//linked list is empty
 			head = newNode;
 		}
 		else{
-			Node curNode = head;
+			Node<T> curNode = head;
 			
 			while(curNode.getLink() != null){ 
 				//iterates to end of linked list
@@ -105,9 +104,9 @@ public class LinkedListImpl implements ILinkedList {
 		}
 	}
 
-	public void insertIndex(String info, int index){
+	public void insertIndex(Comparable info, int index){
 		//creates node, then adds it to a specific index
-		Node newNode = new Node(null, info);
+		Node newNode = new Node<>(null, info);
 		incNumElements();
 		if(head == null){
 			//linked list is empty
@@ -125,6 +124,7 @@ public class LinkedListImpl implements ILinkedList {
 		}
 	}
 
+
 	private void incNumElements(){
 		//Increments the number of elements in the linkedlist
 		numElements++;
@@ -138,6 +138,7 @@ public class LinkedListImpl implements ILinkedList {
 		//returns the total number of elements
 		return numElements;
 	}
+	
 
 	public boolean removeNode(int index){
 		//removes the node at given index, 
@@ -164,11 +165,11 @@ public class LinkedListImpl implements ILinkedList {
 				return false; //null pointer
 			}
 		}
+		
 	}
-
-	public Node search(int index){
+	public Node<T> search(int index){
 		//returns the node at the index location
-		Node curNode;
+		Node<T> curNode = null;
 		if(index <= 0){ //can't be an index of zero or less
 			return null;
 		}
@@ -187,43 +188,44 @@ public class LinkedListImpl implements ILinkedList {
 				return curNode;
 			}
 		}
-		return null;
+		return curNode;
 	}
 
 	public boolean isEmpty(){
-        return head == null;
-    }
+		return head == null;
+	}
+		
 	
 	public String toString(){
 		//returns the elements of the linked list
 		
-		StringBuilder retVal = new StringBuilder();
+		String retVal = "";
 		
 		if(head != null){ //suppress null pointer exception
 			Node curNode = head;
 			while(curNode != null){
-				retVal.append("[").append(curNode.getData()).append("]");
+				retVal += "[" + curNode.getData() + "]";
 				curNode = curNode.getLink();
 			}
 		}
 		
-		return retVal.toString();
+		return retVal;
+		
 	}
-
-	public Node deleteHead(){
+	public Node<T> deleteHead(){
 		//removes the first node and returns it
-		Node retNode = head;
+		Node<T> retNode = head;
 		head = head.getLink();
 		numElements--;
 		return retNode;
 	}
 	
-	public Node getHead(){
+	public Node<T> getHead() {
 		//returns the head node of the linked list
 		return head;
 	}
 
-	public Node getTail(){
+	public Node<T> getTail(){
 		return search(numElements - 1); //returns the tail (element in the last index)
 	}
 

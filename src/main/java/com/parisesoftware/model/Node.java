@@ -1,16 +1,16 @@
 package com.parisesoftware.model;
 
-/**
+/*
  * @author Andrew Parise
  * @since March 10th, 2016
  * @version 29 May 2018
  */
-public class Node {
+public class Node<T extends Comparable<T>> {
 
-	private Node leftNode;
-	private Node rightNode;
-	private String data;
-	private Node link;
+	private Node<T> leftNode;
+	private Node<T> rightNode;
+	private Node<T> link;
+	private T data;
 
     /**
      * Default Constructor
@@ -20,7 +20,7 @@ public class Node {
     /**
      * @param data the information to store in the Node
      */
-	public Node(String data) {
+	public Node(T data) {
 		this.data = data;
 	}
 
@@ -28,18 +28,18 @@ public class Node {
      * @param link the next Node in the Linked List
      * @param data the information to be stored in the Node
      */
-	public Node(Node link, String data) {
+	public Node(Node<T> link, T data) {
 		this.data = data;
 		this.link = link;
 	}
 
     /**
      * Helper method for deletion
-     * @param data
-     * @param parent
-     * @return
+     * @param data to be removed
+     * @param parent to set
+     * @return {@code boolean}
      */
-	public boolean removeNode(String data, Node parent) {
+	public boolean removeNode(T data, Node<T> parent){
 
         //if data comes before getData in alphabetical order
 		if(data.compareTo(getData()) < 0) {
@@ -76,7 +76,7 @@ public class Node {
      * Helper function, returns farthest left node from given node
      * @return
      */
-	public String getMinimumValue() {
+	public T getMinimumValue() {
 		if(getLeftNode() == null){
 			return getData();
 		}
@@ -87,38 +87,42 @@ public class Node {
 	
 
 	//Left Node Get/Set
-	public Node getLeftNode(){
+	public Node<T> getLeftNode(){
 		return leftNode;
 	}
-	public void setLeftNode(Node leftNode){
+	public void setLeftNode(Node<T> leftNode){
 		this.leftNode = leftNode;
 	}
 	
 	//Right Node Get/Set
-	public Node getRightNode(){
+	public Node<T> getRightNode(){
 		return rightNode;
 	}
+
 	public void setRightNode(Node rightNode){
 		this.rightNode = rightNode;
 	}
 	
 	//Data Set/Get
-	public String getData(){
+	public T getData(){
 		return data;
 	}
-	public void setData(String data){
+
+	public void setData(T data){
 		this.data = data;
 	}
 	
 	//Link Set/Get - for linked list class
-	public Node getLink(){
+	public Node<T> getLink(){
 		return link;
 	}
-	public void setLink(Node link){
+
+	public void setLink(Node<T> link){
 		this.link = link;
 	}
 	
 	public String toString(){
 		return "Node's data = " + this.data;
 	}
+
 }
