@@ -86,7 +86,7 @@ public class Node<T extends Comparable<T>> {
     }
 
     public Node<T> getLeftNode() {
-        return leftNode;
+        return this.leftNode;
     }
 
     public void setLeftNode(Node<T> leftNode) {
@@ -94,7 +94,7 @@ public class Node<T extends Comparable<T>> {
     }
 
     public Node<T> getRightNode() {
-        return rightNode;
+        return this.rightNode;
     }
 
     public void setRightNode(Node rightNode) {
@@ -102,7 +102,7 @@ public class Node<T extends Comparable<T>> {
     }
 
     public T getData() {
-        return data;
+        return this.data;
     }
 
     public void setData(T data) {
@@ -110,7 +110,7 @@ public class Node<T extends Comparable<T>> {
     }
 
     public Node<T> getLink() {
-        return link;
+        return this.link;
     }
 
     public void setLink(Node<T> link) {

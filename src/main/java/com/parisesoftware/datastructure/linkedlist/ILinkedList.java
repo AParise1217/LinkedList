@@ -67,8 +67,16 @@ public interface ILinkedList<T extends Comparable<T>> {
      */
     Node<T> deleteHead();
 
+    /**
+     * Returns the {@link Node} at the front of the LinkedList
+     * @return {@code Node} that is first in the LinkedList
+     */
     Node<T> getHead();
 
+    /**
+     * Returns the {@link Node} at the end of the LinkedList
+     * @return {@code Node} that is last in the LinkedList
+     */
     Node<T> getTail();
 
 }

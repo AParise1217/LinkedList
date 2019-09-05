@@ -12,12 +12,12 @@ import com.parisesoftware.model.Node;
 public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
 
     private Node<T> head;
-    private static int numElements;
+    private int numElements;
 
     public LinkedListImpl() {
         //constructor
-        head = null;
-        numElements = 0;
+        this.head = null;
+        this.numElements = 0;
     }
 
     /**
@@ -67,29 +67,30 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
         //creates node, then adds it to a specific index
         Node newNode = new Node<>(null, info);
         incNumElements();
-        if (head == null) {
+
+        if (this.head == null) {
             //linked list is empty
-            head = newNode;
+            this.head = newNode;
         } else {
-            Node curNode = head;
+            Node curNode = this.head;
             for (int i = 1; i < index && curNode.getLink() != null; i++) {
                 //iterate to index location, or end, whichever comes first
                 curNode = curNode.getLink();
             }
+
             newNode.setLink(curNode.getLink()); //set new Node's link to the current node's next link
             curNode.setLink(newNode); //set the current node's link to the new Node
-
         }
     }
 
     private void incNumElements() {
         //Increments the number of elements in the linkedlist
-        numElements++;
+        this.numElements++;
     }
 
     private void decNumElements() {
         //Decrements the number of elements in the linkedList
-        numElements--;
+        this.numElements--;
     }
 
     /**
@@ -106,13 +107,12 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public boolean removeNode(int index) {
-        //removes the node at given index,
-        //returns true if successful, false if null pointer exception or index out of bounds were going to occur
         if (index > getNumElements() || index <= 0) {
             return false; //index out of bounds
         } else {
-            Node curNode = head;
-            if (head != null) {
+            Node curNode = this.head;
+            if (this.head != null) {
+
                 for (int i = 0; i < index - 1; i++) {
                     if (curNode.getLink() == null) {
                         return false; //index out of bounds
@@ -141,9 +141,9 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
         if (index <= 0) { //can't be an index of zero or less
             return null;
         } else {
-            if (head != null) {
+            if (this.head != null) {
 
-                curNode = head;
+                curNode = this.head;
                 for (int i = 0; i < index; i++) {
                     //iterates up until the index where the node is located
                     if (curNode.getLink() == null) {
@@ -163,7 +163,7 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public boolean isEmpty() {
-        return head == null;
+        return this.head == null;
     }
 
     /**
@@ -175,8 +175,8 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
 
         String retVal = "";
 
-        if (head != null) { //suppress null pointer exception
-            Node curNode = head;
+        if (this.head != null) { //suppress null pointer exception
+            Node curNode = this.head;
             while (curNode != null) {
                 retVal += "[" + curNode.getData() + "]";
                 curNode = curNode.getLink();
@@ -192,9 +192,9 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public Node<T> deleteHead() {
-        Node<T> retNode = head;
-        head = head.getLink();
-        numElements--;
+        Node<T> retNode = this.head;
+        this.head = head.getLink();
+        this.numElements--;
         return retNode;
     }
 
@@ -203,7 +203,7 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public Node<T> getHead() {
-        return head;
+        return this.head;
     }
 
     /**
@@ -211,7 +211,7 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public Node<T> getTail() {
-        return search(numElements - 1); //returns the tail (element in the last index)
+        return search(this.numElements - 1); //returns the tail (element in the last index)
     }
 
 }
