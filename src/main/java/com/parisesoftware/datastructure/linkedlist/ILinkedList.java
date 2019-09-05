@@ -3,6 +3,8 @@ package com.parisesoftware.datastructure.linkedlist;
 import com.parisesoftware.model.Node;
 
 /**
+ * Abstraction for a Linked List Data Structure
+ *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
  * @version 1.0.1
  * @since 1.0.0
