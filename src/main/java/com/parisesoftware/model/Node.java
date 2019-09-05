@@ -1,6 +1,9 @@
 package com.parisesoftware.model;
 
 /**
+ * Model to encapsulate Data inside the
+ * {@link com.parisesoftware.datastructure.linkedlist.ILinkedList} Data Structure
+ *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
  * @version 1.0.1
  * @since 1.0.0
@@ -49,27 +52,29 @@ public class Node<T extends Comparable<T>> {
         //if data comes before getData in alphabetical order
         if (data.compareTo(getData()) < 0) {
             return getLeftNode() != null && getLeftNode().removeNode(data, this);
-        } else if (data.compareTo(getData()) > 0) {
-            return getRightNode() != null && getRightNode().removeNode(data, this);
-        } else {
-            if (getLeftNode() != null && getRightNode() != null) {
-                setData(getRightNode().getMinimumValue());
-                getRightNode().removeNode(data, this);
-            } else if (parent.getLeftNode() == this) {
-                if (getLeftNode() != null) {
-                    parent.setLeftNode(getLeftNode());
-                } else {
-                    parent.setLeftNode(getRightNode());
-                }
-            } else if (parent.getRightNode() == this) {
-                if (getLeftNode() != null) {
-                    parent.setRightNode(getLeftNode());
-                } else {
-                    parent.setRightNode(getRightNode());
-                }
-            }
-            return true;
         }
+
+        if (data.compareTo(getData()) > 0) {
+            return getRightNode() != null && getRightNode().removeNode(data, this);
+        }
+
+        if (getLeftNode() != null && getRightNode() != null) {
+            setData(getRightNode().getMinimumValue());
+            getRightNode().removeNode(data, this);
+        } else if (parent.getLeftNode() == this) {
+            if (getLeftNode() != null) {
+                parent.setLeftNode(getLeftNode());
+            } else {
+                parent.setLeftNode(getRightNode());
+            }
+        } else if (parent.getRightNode() == this) {
+            if (getLeftNode() != null) {
+                parent.setRightNode(getLeftNode());
+            } else {
+                parent.setRightNode(getRightNode());
+            }
+        }
+        return true;
     }
 
     /**
@@ -80,9 +85,9 @@ public class Node<T extends Comparable<T>> {
     public T getMinimumValue() {
         if (getLeftNode() == null) {
             return getData();
-        } else {
-            return getLeftNode().getMinimumValue();
         }
+
+        return getLeftNode().getMinimumValue();
     }
 
     public Node<T> getLeftNode() {
@@ -97,7 +102,7 @@ public class Node<T extends Comparable<T>> {
         return this.rightNode;
     }
 
-    public void setRightNode(Node rightNode) {
+    public void setRightNode(Node<T> rightNode) {
         this.rightNode = rightNode;
     }
 

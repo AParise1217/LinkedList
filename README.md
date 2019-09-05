@@ -1,6 +1,10 @@
 # LinkedList
 A sequence of nodes containing some data, and a pointer/link to the next in the sequence.
 
+# Project Setup
+
+From the project root, execute: `./mvn clean install`
+
 # Releasing to Maven Central
 ## Performing a Release Deployment
 *Note: This must occur prior to the Release Deployment!*
