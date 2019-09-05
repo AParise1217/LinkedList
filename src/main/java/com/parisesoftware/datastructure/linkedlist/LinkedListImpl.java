@@ -3,230 +3,215 @@ package com.parisesoftware.datastructure.linkedlist;
 import com.parisesoftware.model.Node;
 
 /**
- * @author Andrew Parise
- * Feb 17th 2016
- * Assignment 3.1
- * Programming II
+ * Default implementation of {@link ILinkedList}
  *
- * Assignment Overview:
- *
- * "This programming exercise introduces the linked lists data structure. 
- * The students must create all the necessary methods for the linked list and use the 
- * linked list in a Java program."
- *
- *
- * LinkedListImpl.java
- * Implementation of a linked list, 
- * 		which is a sequence of nodes containing some string of data, 
- * 		and a pointer (referred to as a link in my code)
- *
- *
- * Usage:
- * 
- * 
- * Creating a Node			: 	"Node nameOfNode = new Node()" 							for link = null, info = ""
- * 								"Node nameofNode = new Node(Node link, String info)"	link is the next Node in the list, info is the data being stored
- * 
- * Valid Method Calls:
- * 
- * 		insertHead(String)					:		insert a Node (from Node.java), with String being the data contained
- * 		insertEnd(String)					:		insert a Node (^^^^^^^^^^^), with String being the data contained
- * 
- * 		insertIndex(Node,int)				:		add a node at a particular index
- * 		incNumElements()/decNumElements() 	:		private methods - modify the counter of the number of elements in the linked list
- * 		getNumElements()					:		returns the number of elements in the linked list
- * 		removeNode(int)						:		removes the node from the linked list at given index
- * 														Return Values:
- * 															True: if the removal was successful
- * 															False: if some exception was going to occur, so removal did not happen
- * 		search(int)							:		returns the node at the index
- * 		isEmpty()							:		returns a boolean of whether or not the linked list is empty
- * 		determineSize()						:		counts the number of nodes in linked list, alternative to getNumElements()
- * 		toString()							:		returns a string containing all of the data contained within the linked list
- * 		deleteHead()						:		deletes the head and returns the node
- * 
- * 		
- * 
- * 		ChangeLog:
- * 			Feb 17th 2016	: 	Initial Revision
- * 			Feb 28th 2016	: 	Added deleteHead()
- * 			Mar 4th 2016	:	Added getHead(), getTail(), insertHead(Object)
- * 			Mar 10 2016		:	Fixed functionality to work with different Node Class
- * 								- Deleted deleteHead(Customer obj)
- * 								- changed toString to support nodeObj.getData()
- * 			
- * 		
+ * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
+ * @version 1.0.1
+ * @since 1.0.0
  */
-
 public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
 
-	private Node<T> head;
-	private static int numElements;
-	
-	public LinkedListImpl(){
-		//constructor
-		head = null;
-		numElements = 0;
-	}
-	
-	public void insertHead(Comparable info){
-		//creates a new node, then adds it to the front of the linked list
-		Node newNode = new Node<>(null, info);
-		incNumElements();
-		if(head == null){
-			//if the linked list is currently empty
-			head = newNode;
-		}
-		else{
-			newNode.setLink(head);
-			head = newNode;
-		}
-		
-	}
+    private Node<T> head;
+    private int numElements;
 
-	public void insertEnd(Comparable info){
-		//creates a new node, then adds it at the end of the linked list
-		Node newNode = new Node<>(null, info);
-		incNumElements();
-		if(head == null){
-			//linked list is empty
-			head = newNode;
-		}
-		else{
-			Node<T> curNode = head;
-			
-			while(curNode.getLink() != null){ 
-				//iterates to end of linked list
-				curNode = curNode.getLink();
-			}
-			curNode.setLink(newNode); //add node as next link to current last in list
-			//System.out.println(newNode.getInfo() + " has been successfully added at the end of the linked list");
-		}
-	}
+    public LinkedListImpl() {
+        //constructor
+        this.head = null;
+        this.numElements = 0;
+    }
 
-	public void insertIndex(Comparable info, int index){
-		//creates node, then adds it to a specific index
-		Node newNode = new Node<>(null, info);
-		incNumElements();
-		if(head == null){
-			//linked list is empty
-			head = newNode;
-		}
-		else{
-			Node curNode = head;
-			for(int i = 1; i < index && curNode.getLink() != null; i++){
-				//iterate to index location, or end, whichever comes first
-				curNode = curNode.getLink();
-			}
-			newNode.setLink(curNode.getLink()); //set new Node's link to the current node's next link
-			curNode.setLink(newNode); //set the current node's link to the new Node
-			
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void insertHead(Comparable info) {
+        //creates a new node, then adds it to the front of the linked list
+        Node newNode = new Node<>(null, info);
+        incNumElements();
+        if (head == null) {
+            //if the linked list is currently empty
+            head = newNode;
+        } else {
+            newNode.setLink(head);
+            head = newNode;
+        }
 
+    }
 
-	private void incNumElements(){
-		//Increments the number of elements in the linkedlist
-		numElements++;
-	}
-	private void decNumElements(){
-		//Decrements the number of elements in the linkedList
-		numElements--;
-	}
-	
-	public int getNumElements(){
-		//returns the total number of elements
-		return numElements;
-	}
-	
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void insertEnd(Comparable info) {
+        Node newNode = new Node<>(null, info);
+        incNumElements();
+        if (head == null) {
+            //linked list is empty
+            head = newNode;
+        } else {
+            Node<T> curNode = head;
 
-	public boolean removeNode(int index){
-		//removes the node at given index, 
-		//returns true if successful, false if null pointer exception or index out of bounds were going to occur
-		if(index > getNumElements() || index <= 0){
-			return false; //index out of bounds
-		}
-		else{
-			Node curNode = head;
-			if(head != null){
-				for(int i = 0; i < index - 1; i++){
-					if(curNode.getLink() == null){
-						return false; //index out of bounds
-					}
-					
-					curNode = curNode.getLink();
-				}
-				//curNode is now the node before the index that needs to be removed
-				curNode.setLink(curNode.getLink().getLink()); //set the node before to be linked to the node after the one needing to be removed
-				decNumElements();
-				return true; //node successfully removed
-			}
-			else{
-				return false; //null pointer
-			}
-		}
-		
-	}
-	public Node<T> search(int index){
-		//returns the node at the index location
-		Node<T> curNode = null;
-		if(index <= 0){ //can't be an index of zero or less
-			return null;
-		}
-		else{
-			if(head != null){
-				
-				curNode = head;
-				for(int i = 0; i < index; i++){
-					//iterates up until the index where the node is located
-					if(curNode.getLink() == null){
-						return null;
-					}
-					curNode = curNode.getLink();
-				}
-				//curNode now is the correct node
-				return curNode;
-			}
-		}
-		return curNode;
-	}
+            while (curNode.getLink() != null) {
+                //iterates to end of linked list
+                curNode = curNode.getLink();
+            }
+            curNode.setLink(newNode); //add node as next link to current last in list
+        }
+    }
 
-	public boolean isEmpty(){
-		return head == null;
-	}
-		
-	
-	public String toString(){
-		//returns the elements of the linked list
-		
-		String retVal = "";
-		
-		if(head != null){ //suppress null pointer exception
-			Node curNode = head;
-			while(curNode != null){
-				retVal += "[" + curNode.getData() + "]";
-				curNode = curNode.getLink();
-			}
-		}
-		
-		return retVal;
-		
-	}
-	public Node<T> deleteHead(){
-		//removes the first node and returns it
-		Node<T> retNode = head;
-		head = head.getLink();
-		numElements--;
-		return retNode;
-	}
-	
-	public Node<T> getHead() {
-		//returns the head node of the linked list
-		return head;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void insertIndex(Comparable info, int index) {
+        //creates node, then adds it to a specific index
+        Node newNode = new Node<>(null, info);
+        incNumElements();
 
-	public Node<T> getTail(){
-		return search(numElements - 1); //returns the tail (element in the last index)
-	}
+        if (this.head == null) {
+            //linked list is empty
+            this.head = newNode;
+        } else {
+            Node curNode = this.head;
+            for (int i = 1; i < index && curNode.getLink() != null; i++) {
+                //iterate to index location, or end, whichever comes first
+                curNode = curNode.getLink();
+            }
+
+            newNode.setLink(curNode.getLink()); //set new Node's link to the current node's next link
+            curNode.setLink(newNode); //set the current node's link to the new Node
+        }
+    }
+
+    private void incNumElements() {
+        //Increments the number of elements in the linkedlist
+        this.numElements++;
+    }
+
+    private void decNumElements() {
+        //Decrements the number of elements in the linkedList
+        this.numElements--;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNumElements() {
+        //returns the total number of elements
+        return numElements;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean removeNode(int index) {
+        if (index > getNumElements() || index <= 0) {
+            return false; //index out of bounds
+        } else {
+            Node curNode = this.head;
+            if (this.head != null) {
+
+                for (int i = 0; i < index - 1; i++) {
+                    if (curNode.getLink() == null) {
+                        return false; //index out of bounds
+                    }
+
+                    curNode = curNode.getLink();
+                }
+                //curNode is now the node before the index that needs to be removed
+                curNode.setLink(curNode.getLink().getLink()); //set the node before to be linked to the node after the one needing to be removed
+                decNumElements();
+                return true; //node successfully removed
+            } else {
+                return false; //null pointer
+            }
+        }
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node<T> search(int index) {
+        //returns the node at the index location
+        Node<T> curNode = null;
+        if (index <= 0) { //can't be an index of zero or less
+            return null;
+        } else {
+            if (this.head != null) {
+
+                curNode = this.head;
+                for (int i = 0; i < index; i++) {
+                    //iterates up until the index where the node is located
+                    if (curNode.getLink() == null) {
+                        return null;
+                    }
+                    curNode = curNode.getLink();
+                }
+                //curNode now is the correct node
+                return curNode;
+            }
+        }
+        return curNode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmpty() {
+        return this.head == null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        //returns the elements of the linked list
+
+        String retVal = "";
+
+        if (this.head != null) { //suppress null pointer exception
+            Node curNode = this.head;
+            while (curNode != null) {
+                retVal += "[" + curNode.getData() + "]";
+                curNode = curNode.getLink();
+            }
+        }
+
+        return retVal;
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node<T> deleteHead() {
+        Node<T> retNode = this.head;
+        this.head = head.getLink();
+        this.numElements--;
+        return retNode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node<T> getHead() {
+        return this.head;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node<T> getTail() {
+        return search(this.numElements - 1); //returns the tail (element in the last index)
+    }
 
 }
