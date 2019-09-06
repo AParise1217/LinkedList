@@ -5,14 +5,14 @@ package com.parisesoftware.model;
  * {@link com.parisesoftware.datastructure.linkedlist.ILinkedList} Data Structure
  *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class Node<T extends Comparable<T>> implements INode<T> {
 
     private INode<T> link;
 
-    private T data;
+    protected T data;
 
     /**
      * @param data the information to store in the Node
