@@ -26,31 +26,31 @@ public class LinkedListTest {
         System.out.println(linkedList.toString()); //Linked List should be full of student names at this point
 
 
-        System.out.println("Linked List currently has " + linkedList.getNumElements() + " elements."); //Using sample data above, should be 10
+        System.out.println("Linked List currently has " + linkedList.getSize() + " elements."); //Using sample data above, should be 10
 
         linkedList.removeNode(1); //remove second node
 
         //Confirm
         System.out.println(linkedList.toString());
-        System.out.println("Linked List currently has " + linkedList.getNumElements() + " elements.");
+        System.out.println("Linked List currently has " + linkedList.getSize() + " elements.");
 
         linkedList.removeNode(8); //remove the 9th (last) node
 
         //confirm
         System.out.println(linkedList.toString());
-        System.out.println("Linked List currently has " + linkedList.getNumElements() + " elements.");
+        System.out.println("Linked List currently has " + linkedList.getSize() + " elements.");
 
         linkedList.insertHead("Jimmy"); //add new node at head
 
         //confirm
         System.out.println(linkedList.toString());
-        System.out.println("Linked List currently has " + linkedList.getNumElements() + " elements.");
+        System.out.println("Linked List currently has " + linkedList.getSize() + " elements.");
 
         linkedList.insertEnd("Justin"); //add new node at end
 
         //confirm
         System.out.println(linkedList.toString());
-        System.out.println("Linked List currently has " + linkedList.getNumElements() + " elements.");
+        System.out.println("Linked List currently has " + linkedList.getSize() + " elements.");
 
         if (linkedList.isEmpty()) { //test to see if the list is empty
             System.out.println("The Linked List is currently empty.");

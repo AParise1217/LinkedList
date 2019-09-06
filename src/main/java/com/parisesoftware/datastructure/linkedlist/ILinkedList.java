@@ -1,5 +1,6 @@
 package com.parisesoftware.datastructure.linkedlist;
 
+import com.parisesoftware.model.INode;
 import com.parisesoftware.model.Node;
 
 /**
@@ -29,12 +30,13 @@ public interface ILinkedList<T extends Comparable<T>> {
      * @param info  the data to be stored in the Node
      * @param index the index where the Node will be inserted
      */
-    void insertIndex(T info, int index); //creates node with info then places at index
+    void insertIndex(T info, int index);
 
     /**
-     * @return the number of nodes in linked list
+     * Fetch the Number of Elements in this Linked List
+     * @return {@code int} the size of this data structure
      */
-    int getNumElements();
+    int getSize();
 
     /**
      * Removes the node at index
@@ -50,7 +52,7 @@ public interface ILinkedList<T extends Comparable<T>> {
      * @param index the index of the Node to be fetched
      * @return the Node at the @param index
      */
-    Node<T> search(int index);
+    INode<T> search(int index);
 
     /**
      * @return true if linked list is empty, false if has greater than 0 nodes
@@ -67,18 +69,18 @@ public interface ILinkedList<T extends Comparable<T>> {
      *
      * @return the Node located at the head of the Linked List
      */
-    Node<T> deleteHead();
+    INode<T> deleteHead();
 
     /**
      * Returns the {@link Node} at the front of the LinkedList
      * @return {@code Node} that is first in the LinkedList
      */
-    Node<T> getHead();
+    INode<T> getHead();
 
     /**
      * Returns the {@link Node} at the end of the LinkedList
      * @return {@code Node} that is last in the LinkedList
      */
-    Node<T> getTail();
+    INode<T> getTail();
 
 }
