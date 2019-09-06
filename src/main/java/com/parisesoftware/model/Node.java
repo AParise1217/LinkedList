@@ -14,6 +14,8 @@ public class Node<T extends Comparable<T>> implements INode<T> {
 
     protected T data;
 
+    public Node() {}
+
     /**
      * @param data the information to store in the Node
      */
