@@ -1,5 +1,6 @@
 package com.parisesoftware.datastructure.linkedlist
 
+import com.parisesoftware.model.INode
 import spock.lang.Specification
 
 class LinkedListImplTest extends Specification {
@@ -31,19 +32,19 @@ class LinkedListImplTest extends Specification {
         !resultant
     }
 
-    def "getNumElements(): should return 0 immediately following construction"() {
+    def "getSize(): should return 0 immediately following construction"() {
 
         given: 'a LinkedList instance'
         final LinkedListImpl testLinkedList = new LinkedListImpl()
 
         when: "the LinkedList is queried for how many elements are contained"
-        final int resultant = testLinkedList.getNumElements()
+        final int resultant = testLinkedList.getSize()
 
         then: "the resultant integer is 0"
         resultant == 0
     }
 
-    def "getNumElements(): should return 1 after an element is inserted into the LinkedList"() {
+    def "getSize(): should return 1 after an element is inserted into the LinkedList"() {
 
         given: 'a LinkedList instance'
         final LinkedListImpl testLinkedList = new LinkedListImpl()
@@ -52,7 +53,7 @@ class LinkedListImplTest extends Specification {
         testLinkedList.insertHead('Hemispheres')
 
         when: "the LinkedList is queried for how many elements are contained"
-        final int resultant = testLinkedList.getNumElements()
+        final int resultant = testLinkedList.getSize()
 
         then: "the resultant integer is 1"
         resultant == 1
@@ -74,7 +75,7 @@ class LinkedListImplTest extends Specification {
         final boolean resultant = testLinkedList.removeNode(outOfBoundsNumber)
 
         then: "Sanity Check: validate that the out of bounds number is greater than the size of the LinkedList"
-        outOfBoundsNumber >= testLinkedList.getNumElements()
+        outOfBoundsNumber >= testLinkedList.getSize()
 
         and: 'the resultant boolean is false'
         !resultant
@@ -108,6 +109,30 @@ class LinkedListImplTest extends Specification {
 
         and: 'a NPE was not thrown'
         notThrown(NullPointerException)
+    }
+
+    def "createNode(T): should return a Node of type INode"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a request to create a Node with some test value"
+        final Object resultant = testLinkedList.createNode(1979)
+
+        then: 'the resultant Node is of type INode'
+        resultant instanceof INode
+    }
+
+    def "createNodeWithLink(INode, T): should return a Node of type INode"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a request to create a Node with the test value"
+        final Object resultant = testLinkedList.createNodeWithLink(Mock(INode), 'Mad Max')
+
+        then: 'the resultant Node is of type INode'
+        resultant instanceof INode
     }
 
 }
