@@ -5,7 +5,7 @@
 
     <artifactId>linkedlist</artifactId>
     <groupId>com.parisesoftware</groupId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>LinkedList Data Structure</name>
     <description>LinkedList Data Structure Implementation</description>
     <packaging>jar</packaging>
