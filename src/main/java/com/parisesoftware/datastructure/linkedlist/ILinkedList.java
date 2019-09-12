@@ -1,13 +1,14 @@
 package com.parisesoftware.datastructure.linkedlist;
 
 import com.parisesoftware.model.INode;
-import com.parisesoftware.model.Node;
+
+import java.util.Optional;
 
 /**
  * Abstraction for a Linked List Data Structure
  *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
- * @version 1.0.1
+ * @version 1.0.4
  * @since 1.0.0
  */
 public interface ILinkedList<T extends Comparable<T>> {
@@ -50,9 +51,9 @@ public interface ILinkedList<T extends Comparable<T>> {
      * Iterates through linked list and returns the node at the index
      *
      * @param index the index of the Node to be fetched
-     * @return the Node at the @param index
+     * @return {@code Optional} {@link INode} at the given index
      */
-    INode<T> search(int index);
+    Optional<INode<T>> search(int index);
 
     /**
      * @return true if linked list is empty, false if has greater than 0 nodes
@@ -72,15 +73,16 @@ public interface ILinkedList<T extends Comparable<T>> {
     INode<T> deleteHead();
 
     /**
-     * Returns the {@link Node} at the front of the LinkedList
-     * @return {@code Node} that is first in the LinkedList
+     * Returns the {@link INode} at the front of the LinkedList
+     * @return {@code Optional} {@link INode} that is first in the LinkedList
      */
-    INode<T> getHead();
+    Optional<INode<T>> getHead();
 
     /**
-     * Returns the {@link Node} at the end of the LinkedList
-     * @return {@code Node} that is last in the LinkedList
+     * Returns the {@link INode} at the end of the LinkedList
+     * @return {@code Optional} {@link INode} that is last in the LinkedList
+     * @since 1.0.0
      */
-    INode<T> getTail();
+    Optional<INode<T>> getTail();
 
 }

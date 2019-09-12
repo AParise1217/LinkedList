@@ -1,13 +1,16 @@
 package com.parisesoftware.datastructure.linkedlist;
 
 
+import com.parisesoftware.model.INode;
+
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class LinkedListTest {
 
     public static void main(String[] args) {
 
-        LinkedListImpl linkedList = new LinkedListImpl();
+        LinkedListImpl<String> linkedList = new LinkedListImpl<>();
 
         if (linkedList.isEmpty()) { //test to see if the list is empty
             System.out.println("The Linked List is currently empty.");
@@ -55,7 +58,15 @@ public class LinkedListTest {
         if (linkedList.isEmpty()) { //test to see if the list is empty
             System.out.println("The Linked List is currently empty.");
         }
-        System.out.println("The node at the third index is: " + linkedList.search(2).getData());
+
+        final Optional<INode<String>> optionalThirdIndexNode = linkedList.search(2);
+        if(!optionalThirdIndexNode.isPresent()) {
+            // TODO: when this is converted to unit test cases, this should not be the case that is hit
+            System.out.println("There is no node at the third index");
+        } else {
+            // TODO: when this is converted to unit test cases, this case should be hit
+            System.out.println("The node at the third index is: " + optionalThirdIndexNode.get().getData());
+        }
 
     }
 

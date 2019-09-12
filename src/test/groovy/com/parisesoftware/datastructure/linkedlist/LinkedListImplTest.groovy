@@ -81,6 +81,119 @@ class LinkedListImplTest extends Specification {
         !resultant
     }
 
+    def "search(): should return an Optional.empty() when an index out of bounds is requested"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        and: 'three Elements are inserted into the LinkedList'
+        testLinkedList.insertHead('Twilight Zone')
+        testLinkedList.insertHead('Passage To Bangkok')
+        testLinkedList.insertHead('2112')
+
+        and: 'an out of bounds integer to be used in the search request'
+        final int outOfBoundsNumber = 500
+
+        when: "the LinkedList receives a query for an out of bounds Node"
+        final Optional<INode> resultant = testLinkedList.search(outOfBoundsNumber)
+
+        then: "Sanity Check: validate that the out of bounds number is greater than the size of the LinkedList"
+        outOfBoundsNumber >= testLinkedList.getSize()
+
+        and: 'the resultant Optional is not present'
+        !resultant.isPresent()
+    }
+
+    def "getTail(): should return an Optional.empty() when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a query for the tail"
+        final Optional<INode> resultant = testLinkedList.getTail()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'the resultant Node is not present'
+        !resultant.isPresent()
+    }
+
+    def "getTail(): should not return null when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a query for the tail"
+        final Optional<INode> resultant = testLinkedList.getTail()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'the resultant is not null'
+        resultant != null
+    }
+
+    def "getTail(): should not throw a NPE when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a query for the tail"
+        testLinkedList.getTail()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'a NPE was not thrown'
+        notThrown(NullPointerException)
+    }
+
+    def "getHead(): should return an Optional.empty() when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a query for the head"
+        final Optional<INode> resultant = testLinkedList.getHead()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'the resultant Node is not present'
+        !resultant.isPresent()
+    }
+
+    def "getHead(): should not return null when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a query for the head"
+        final Optional<INode> resultant = testLinkedList.getHead()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'the resultant is not null'
+        resultant != null
+    }
+
+    def "getHead(): should not throw a NPE when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a query for the head"
+        testLinkedList.getHead()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'a NPE was not thrown'
+        notThrown(NullPointerException)
+    }
+
     def "removeNode(): should return false if the LinkedList is empty"() {
 
         given: 'a LinkedList instance'
