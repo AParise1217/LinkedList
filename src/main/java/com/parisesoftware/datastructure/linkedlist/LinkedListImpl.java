@@ -3,11 +3,13 @@ package com.parisesoftware.datastructure.linkedlist;
 import com.parisesoftware.model.INode;
 import com.parisesoftware.model.Node;
 
+import java.util.Optional;
+
 /**
  * Default implementation of {@link ILinkedList}
  *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
- * @version 1.0.1
+ * @version 1.0.4
  * @since 1.0.0
  */
 public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
@@ -73,11 +75,11 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
         }
 
         INode<T> curNode = this.head;
-
         while (curNode.getLink() != null) {
             //iterates to end of linked list
             curNode = curNode.getLink();
         }
+
         curNode.setLink(newNode); //add node as next link to current last in list
     }
 
@@ -167,22 +169,22 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      * {@inheritDoc}
      */
     @Override
-    public INode<T> search(int index) {
+    public Optional<INode<T>> search(int index) {
 
         if (isIndexOutOfBounds(index)) {
-            return null;
+            return Optional.empty();
         }
 
         INode<T> curNode = this.head;
         for (int i = 0; i < index; i++) {
             //iterates up until the index where the node is located
             if (curNode.getLink() == null) {
-                return null;
+                return Optional.empty();
             }
             curNode = curNode.getLink();
         }
 
-        return curNode;
+        return Optional.of(curNode);
     }
 
     /**
@@ -232,15 +234,19 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      * {@inheritDoc}
      */
     @Override
-    public INode<T> getHead() {
-        return this.head;
+    public Optional<INode<T>> getHead() {
+        if(this.head == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(this.head);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public INode<T> getTail() {
+    public Optional<INode<T>> getTail() {
         return search(this.numElements - 1); //returns the tail (element in the last index)
     }
 
