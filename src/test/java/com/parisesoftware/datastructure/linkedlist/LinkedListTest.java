@@ -1,7 +1,11 @@
 package com.parisesoftware.datastructure.linkedlist;
 
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.parisesoftware.model.INode;
+import com.parisesoftware.model.NodeModule;
+import com.parisesoftware.model.factory.INodeFactory;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -10,7 +14,9 @@ public class LinkedListTest {
 
     public static void main(String[] args) {
 
-        LinkedListImpl<String> linkedList = new LinkedListImpl<>();
+        Injector injector = Guice.createInjector(new NodeModule());
+
+        ILinkedList linkedList = new LinkedListImpl<>(injector.getInstance(INodeFactory.class));
 
         if (linkedList.isEmpty()) { //test to see if the list is empty
             System.out.println("The Linked List is currently empty.");

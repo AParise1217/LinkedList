@@ -1,24 +1,31 @@
 package com.parisesoftware.datastructure.linkedlist;
 
 import com.parisesoftware.model.INode;
-import com.parisesoftware.model.Node;
+import com.parisesoftware.model.factory.INodeFactory;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 /**
  * Default implementation of {@link ILinkedList}
  *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.0
  */
 public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
 
     private INode<T> head;
+
     private int numElements;
 
-    public LinkedListImpl() {
-        //constructor
+    private final INodeFactory<T> nodeFactory;
+
+    @Inject
+    public LinkedListImpl(INodeFactory<T> nodeFactory) {
+
+        this.nodeFactory = nodeFactory;
+
         this.head = null;
         this.numElements = 0;
     }
@@ -33,32 +40,11 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
         incNumElements();
 
         if (isEmpty()) {
-            this.head = createNode(info);
+            this.head = this.nodeFactory.createNode(info);
             return;
         }
 
-        this.head = createNodeWithLink(this.head, info);
-    }
-
-    /**
-     * Creates a new {@link INode} based on the given info
-     *
-     * @param info {@code T} to create the Node with
-     * @return {@code INode} constructed with the given info
-     */
-    INode<T> createNode(final T info) {
-        return new Node<>(null, info);
-    }
-
-    /**
-     * Creates a new {@link INode} based on the given info
-     *
-     * @param link {@code Node} to be set as the next in the sequence
-     * @param info {@code Comparable} data to create the Node with
-     * @return {@code INode} constructed with the given info
-     */
-    INode<T> createNodeWithLink(INode<T> link, final T info) {
-        return new Node<>(link, info);
+        this.head = this.nodeFactory.createNodeWithLink(this.head, info);
     }
 
     /**
@@ -66,7 +52,7 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public void insertEnd(T info) {
-        INode<T> newNode = createNode(info);
+        INode<T> newNode = this.nodeFactory.createNode(info);
         incNumElements();
 
         if (isEmpty()) {
@@ -89,7 +75,7 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
     @Override
     public void insertIndex(T info, int index) {
         //creates node, then adds it to a specific index
-        INode<T> newNode = createNode(info);
+        INode<T> newNode = this.nodeFactory.createNode(info);
         incNumElements();
 
         if (isEmpty()) {
@@ -223,11 +209,17 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      * {@inheritDoc}
      */
     @Override
-    public INode<T> deleteHead() {
+    public Optional<INode<T>> deleteHead() {
+
+        if(isEmpty()) {
+            return Optional.empty();
+        }
+
         INode<T> retNode = this.head;
         this.head = this.head.getLink();
-        this.numElements--;
-        return retNode;
+
+        decNumElements();
+        return Optional.of(retNode);
     }
 
     /**
@@ -235,7 +227,7 @@ public class LinkedListImpl<T extends Comparable<T>> implements ILinkedList<T> {
      */
     @Override
     public Optional<INode<T>> getHead() {
-        if(this.head == null) {
+        if(isEmpty()) {
             return Optional.empty();
         }
 

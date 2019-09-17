@@ -1,6 +1,7 @@
 package com.parisesoftware.datastructure.linkedlist
 
 import com.parisesoftware.model.INode
+import com.parisesoftware.model.factory.INodeFactory
 import spock.lang.Specification
 
 class LinkedListImplTest extends Specification {
@@ -19,8 +20,13 @@ class LinkedListImplTest extends Specification {
 
     def "isEmpty(): should return false after an element is inserted"() {
 
-        given: 'a LinkedList instance'
-        final LinkedListImpl testLinkedList = new LinkedListImpl()
+        given: 'a mocked INodeFactory instance, set to always return mocked INode instances'
+        INodeFactory mockFactory = Mock(INodeFactory) {
+            createNode(_) >> Mock(INode)
+        }
+
+        and: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl(mockFactory)
 
         and: 'an Element is inserted into the LinkedList'
         testLinkedList.insertHead('a Farewell to Kings')
@@ -47,7 +53,7 @@ class LinkedListImplTest extends Specification {
     def "getSize(): should return 1 after an element is inserted into the LinkedList"() {
 
         given: 'a LinkedList instance'
-        final LinkedListImpl testLinkedList = new LinkedListImpl()
+        final LinkedListImpl testLinkedList = new LinkedListImpl(Mock(INodeFactory))
 
         and: 'an Element is inserted into the LinkedList'
         testLinkedList.insertHead('Hemispheres')
@@ -62,7 +68,7 @@ class LinkedListImplTest extends Specification {
     def "removeNode(): should return false when an index out of bounds is requested"() {
 
         given: 'a LinkedList instance'
-        final LinkedListImpl testLinkedList = new LinkedListImpl()
+        final LinkedListImpl testLinkedList = new LinkedListImpl(Mock(INodeFactory))
 
         and: 'two Elements are inserted into the LinkedList'
         testLinkedList.insertHead('Signals')
@@ -84,7 +90,7 @@ class LinkedListImplTest extends Specification {
     def "search(): should return an Optional.empty() when an index out of bounds is requested"() {
 
         given: 'a LinkedList instance'
-        final LinkedListImpl testLinkedList = new LinkedListImpl()
+        final LinkedListImpl testLinkedList = new LinkedListImpl(Mock(INodeFactory))
 
         and: 'three Elements are inserted into the LinkedList'
         testLinkedList.insertHead('Twilight Zone')
@@ -101,6 +107,21 @@ class LinkedListImplTest extends Specification {
         outOfBoundsNumber >= testLinkedList.getSize()
 
         and: 'the resultant Optional is not present'
+        !resultant.isPresent()
+    }
+
+    def "deleteHead(): should return an Optional.empty() when the LinkedList is empty"() {
+
+        given: 'a LinkedList instance'
+        final LinkedListImpl testLinkedList = new LinkedListImpl()
+
+        when: "the LinkedList receives a command to delete the head"
+        final Optional<INode> resultant = testLinkedList.deleteHead()
+
+        then: "Sanity Check: validate that the LinkedList is empty"
+        testLinkedList.isEmpty()
+
+        and: 'the resultant Node is not present'
         !resultant.isPresent()
     }
 
@@ -222,30 +243,6 @@ class LinkedListImplTest extends Specification {
 
         and: 'a NPE was not thrown'
         notThrown(NullPointerException)
-    }
-
-    def "createNode(T): should return a Node of type INode"() {
-
-        given: 'a LinkedList instance'
-        final LinkedListImpl testLinkedList = new LinkedListImpl()
-
-        when: "the LinkedList receives a request to create a Node with some test value"
-        final Object resultant = testLinkedList.createNode(1979)
-
-        then: 'the resultant Node is of type INode'
-        resultant instanceof INode
-    }
-
-    def "createNodeWithLink(INode, T): should return a Node of type INode"() {
-
-        given: 'a LinkedList instance'
-        final LinkedListImpl testLinkedList = new LinkedListImpl()
-
-        when: "the LinkedList receives a request to create a Node with the test value"
-        final Object resultant = testLinkedList.createNodeWithLink(Mock(INode), 'Mad Max')
-
-        then: 'the resultant Node is of type INode'
-        resultant instanceof INode
     }
 
 }
