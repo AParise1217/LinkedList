@@ -8,7 +8,7 @@ import java.util.Optional;
  * Abstraction for a Linked List Data Structure
  *
  * @author <a href="mailto:andrewparise1994@gmail.com">Andrew Parise</a>
- * @version 1.0.4
+ * @version 1.0.5
  * @since 1.0.0
  */
 public interface ILinkedList<T extends Comparable<T>> {
@@ -68,9 +68,9 @@ public interface ILinkedList<T extends Comparable<T>> {
     /**
      * Deletes the head of the Linked List and returns its node
      *
-     * @return the Node located at the head of the Linked List
+     * @return {@code Optional} {@link INode} the Node located at the head of the Linked List
      */
-    INode<T> deleteHead();
+    Optional<INode<T>> deleteHead();
 
     /**
      * Returns the {@link INode} at the front of the LinkedList
@@ -81,7 +81,6 @@ public interface ILinkedList<T extends Comparable<T>> {
     /**
      * Returns the {@link INode} at the end of the LinkedList
      * @return {@code Optional} {@link INode} that is last in the LinkedList
-     * @since 1.0.0
      */
     Optional<INode<T>> getTail();
 
